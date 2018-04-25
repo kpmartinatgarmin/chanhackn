@@ -1,0 +1,1355 @@
+{
+	"info": {
+		"_postman_id": "f385f4a7-db7e-4021-8325-efdef5b72695",
+		"name": "CAPS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"description": null,
+			"item": [
+				{
+					"name": "Step 1: caps.contentAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"var FormatBody = jsonObject.CapsContentAuthResponse.Format.$;",
+									"",
+									"postman.setEnvironmentVariable(\"contentAuthToken\", FormatBody.contentAuthToken);",
+									"postman.setEnvironmentVariable(\"contentSetUrl\", FormatBody.contentSetUrl);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{CAPS Auth Base URL}}/caps?req=caps.contentAuth&rspFmt=XML&subscriptionType=CAPS-all&oAuth=ABC&deviceId=123&customerId=978&transactionKey=x7nfdpb911j72l90mk%21",
+							"host": [
+								"{{CAPS Auth Base URL}}"
+							],
+							"path": [
+								"caps"
+							],
+							"query": [
+								{
+									"key": "req",
+									"value": "caps.contentAuth"
+								},
+								{
+									"key": "rspFmt",
+									"value": "XML"
+								},
+								{
+									"key": "subscriptionType",
+									"value": "CAPS-all"
+								},
+								{
+									"key": "oAuth",
+									"value": "ABC"
+								},
+								{
+									"key": "deviceId",
+									"value": "123"
+								},
+								{
+									"key": "customerId",
+									"value": "978"
+								},
+								{
+									"key": "transactionKey",
+									"value": "x7nfdpb911j72l90mk%21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 2: ContentSet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9d7ebeb0-0270-4da4-b937-6841b37f7b9e",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"var contentItems = jsonObject.ContentSet.Content.ContentUrl;",
+									"var availableResources = {}",
+									"",
+									"for (var i=0,len=contentItems.length; i<len; i++) {",
+									"    var thisItem = contentItems[i];",
+									"    postman.setEnvironmentVariable(",
+									"        thisItem.ContentDescriptor.$.contentType + '.' + thisItem.ContentDescriptor.$.contentDomain,",
+									"        thisItem.$.urlBase",
+									"        );",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Encoding",
+								"value": "identity;q=0",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "identity;q=0",
+								"disabled": true
+							},
+							{
+								"key": "//Accept-Encoding",
+								"value": "identity;q=0",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{contentSetUrl}}?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{contentSetUrl}}"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						},
+						"description": "Since the Content-Type and Content-Encoding are not correct, it's probably best to use \"Send and Download\" rather than just \"Send\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Weather Imagery",
+			"description": null,
+			"item": [
+				{
+					"name": "RADAR",
+					"description": "",
+					"item": [
+						{
+							"name": "Radar.ALASKA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "77c6bd4b-4e41-4d3c-b7b4-8f3b2c566ac0",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.ALASKA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.ALASKA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Radar.AUSTRALIA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.ALASKA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.ALASKA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Radar.CONUS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.CONUS}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.CONUS}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Radar.EUROPE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.CONUS}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.CONUS}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Radar.HAWAII",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.HAWAII}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.HAWAII}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RadarComp.ALASKA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.ALASKA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.ALASKA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RadarComp.AUSTRALIA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.ALASKA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.ALASKA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RadarComp.CONUS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.CONUS}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.CONUS}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RadarComp.EUROPE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.CONUS}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.CONUS}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RadarComp.HAWAII",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.HAWAII}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.HAWAII}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "979c1995-0a13-48bd-aa90-c87090cadcc8",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "72b959a4-a296-4c7e-b1cc-d7ace146e5f7",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"var tilesets = jsonObject.Index.Tileset || null;",
+									"",
+									"if (tilesets !== null) {",
+									"    mostRecentTileset = tilesets[0].$",
+									"    ",
+									"    SECONDS_TO_STALE = 300;",
+									"    ",
+									"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+									"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+									"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+									"    ",
+									"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+									"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RADAR (slow)",
+					"description": "",
+					"item": [
+						{
+							"name": "RadarComp.SCANDINAVIA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.SCANDINAVIA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.SCANDINAVIA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Radar.SCANDINAVIA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.SCANDINAVIA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.SCANDINAVIA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Radar.NORFOLK_ISLAND",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.NORFOLK_ISLAND}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.NORFOLK_ISLAND}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RadarComp.NORFOLK_ISLAND",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Radar.NORFOLK_ISLAND}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{Radar.NORFOLK_ISLAND}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4a5d2d9e-3387-471e-bddd-1ad12c5048a4",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4b72f82-cab4-44c4-8f5c-48c7f2491a56",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"var tilesets = jsonObject.Index.Tileset || null;",
+									"",
+									"if (tilesets !== null) {",
+									"    mostRecentTileset = tilesets[0].$",
+									"    ",
+									"    SECONDS_TO_STALE = 900;",
+									"    ",
+									"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+									"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+									"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+									"    ",
+									"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+									"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Satellite",
+					"description": "",
+					"item": [
+						{
+							"name": "IRSat. AUSTRALIA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca4b2f27-6e1c-4f8e-b0fd-e7494eae40b8",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);",
+											"var tilesets = jsonObject.Index.Tileset || null;",
+											"",
+											"if (tilesets !== null) {",
+											"    mostRecentTileset = tilesets[0].$",
+											"    ",
+											"    SECONDS_TO_STALE = 1200;",
+											"    ",
+											"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+											"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+											"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+											"    ",
+											"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+											"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{IRSat.AUSTRALIA}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{IRSat.AUSTRALIA}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "IRSat. EUROPE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "867e9586-1acc-476e-a5a8-c79b2cdecf21",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);",
+											"var tilesets = jsonObject.Index.Tileset || null;",
+											"",
+											"if (tilesets !== null) {",
+											"    mostRecentTileset = tilesets[0].$",
+											"    ",
+											"    SECONDS_TO_STALE = 1800;",
+											"    ",
+											"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+											"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+											"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+											"    ",
+											"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+											"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{IRSat.EUROPE}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{IRSat.EUROPE}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "IRSat.GOES",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "713add6e-c42e-45b4-a6f7-d9f7fcd9d6df",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);",
+											"var tilesets = jsonObject.Index.Tileset || null;",
+											"",
+											"if (tilesets !== null) {",
+											"    mostRecentTileset = tilesets[0].$",
+											"    ",
+											"    SECONDS_TO_STALE = 1800;",
+											"    ",
+											"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+											"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+											"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+											"    ",
+											"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+											"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{IRSat.GOES}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{IRSat.GOES}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "IRSat.GOES_E",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c3b80cc8-aec7-4cb6-aeff-79b02da83d62",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);",
+											"var tilesets = jsonObject.Index.Tileset || null;",
+											"",
+											"if (tilesets !== null) {",
+											"    mostRecentTileset = tilesets[0].$",
+											"    ",
+											"    SECONDS_TO_STALE = 900;",
+											"    ",
+											"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+											"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+											"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+											"    ",
+											"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+											"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{IRSat.GOES_E}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{IRSat.GOES_E}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "IRSat. INDIAN_OCEAN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "02c404ee-99c7-4976-bab8-7f646fc38b2c",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);",
+											"var tilesets = jsonObject.Index.Tileset || null;",
+											"",
+											"if (tilesets !== null) {",
+											"    mostRecentTileset = tilesets[0].$",
+											"    ",
+											"    SECONDS_TO_STALE = 1800;",
+											"    ",
+											"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+											"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+											"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+											"    ",
+											"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+											"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{IRSat.INDIAN_OCEAN}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{IRSat.INDIAN_OCEAN}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VisSat.GOES_E",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc2998d8-bc8d-4d2f-a756-67142e4f0693",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);",
+											"var tilesets = jsonObject.Index.Tileset || null;",
+											"",
+											"if (tilesets !== null) {",
+											"    mostRecentTileset = tilesets[0].$",
+											"    ",
+											"    SECONDS_TO_STALE = 900;",
+											"    ",
+											"    var mostRecentTilesetInSeconds = parseInt(mostRecentTileset.time, 10)",
+											"    var currentTimeInSeconds = ~~(new Date().getTime()/1000)",
+											"    var howManySecondsOld = currentTimeInSeconds - mostRecentTilesetInSeconds",
+											"    ",
+											"    pm.test(\"Freshest data is \" + howManySecondsOld + \" seconds old, which is within the expected \" + SECONDS_TO_STALE + \" seconds (± \"+ SECONDS_TO_STALE +\").\", function () {",
+											"        pm.expect(howManySecondsOld).to.be.closeTo(SECONDS_TO_STALE,SECONDS_TO_STALE);",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{VisSat.GOES_E}}/index.xml?contentAuthToken={{contentAuthToken}}",
+									"host": [
+										"{{VisSat.GOES_E}}"
+									],
+									"path": [
+										"index.xml"
+									],
+									"query": [
+										{
+											"key": "contentAuthToken",
+											"value": "{{contentAuthToken}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Gridded Data",
+			"description": "",
+			"item": [
+				{
+					"name": "GriddedIcing.CONUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{GriddedIcing.CONUS}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{GriddedIcing.CONUS}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GriddedMslPressure.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{GriddedMslPressure.GLOBAL}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{GriddedMslPressure.GLOBAL}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GriddedSeaState.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{GriddedSeaState.GLOBAL}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{GriddedSeaState.GLOBAL}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GriddedSeaSurfaceTemp.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{GriddedSeaSurfaceTemp.GLOBAL}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{GriddedSeaSurfaceTemp.GLOBAL}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GriddedSurfaceTemp.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{GriddedSurfaceTemp.GLOBAL}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{GriddedSurfaceTemp.GLOBAL}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GriddedWindsAloft.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{GriddedWindsAloft.GLOBAL}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{GriddedWindsAloft.GLOBAL}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Text Data",
+			"description": "",
+			"item": [
+				{
+					"name": "Lightning.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Lightning.GLOBAL}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{Lightning.GLOBAL}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Metar.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Metar.GLOBAL}}/version2?contentAuthToken=thou.shalt.not.steal",
+							"host": [
+								"{{Metar.GLOBAL}}"
+							],
+							"path": [
+								"version2"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "thou.shalt.not.steal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Severe.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Severe.GLOBAL}}/version2?contentAuthToken=thou.shalt.not.steal",
+							"host": [
+								"{{Severe.GLOBAL}}"
+							],
+							"path": [
+								"version2"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "thou.shalt.not.steal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShipBuoy.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{ShipBuoy.GLOBAL}}/version2?contentAuthToken=thou.shalt.not.steal",
+							"host": [
+								"{{ShipBuoy.GLOBAL}}"
+							],
+							"path": [
+								"version2"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "thou.shalt.not.steal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "StormCell.CONUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{StormCell.CONUS}}/index.xml?contentAuthToken={{contentAuthToken}}",
+							"host": [
+								"{{StormCell.CONUS}}"
+							],
+							"path": [
+								"index.xml"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "{{contentAuthToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Taf.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Taf.GLOBAL}}/version2?contentAuthToken=thou.shalt.not.steal",
+							"host": [
+								"{{Taf.GLOBAL}}"
+							],
+							"path": [
+								"version2"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "thou.shalt.not.steal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ZoneForecast.GLOBAL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{ZoneForecast.GLOBAL}}/version2?contentAuthToken=thou.shalt.not.steal",
+							"host": [
+								"{{ZoneForecast.GLOBAL}}"
+							],
+							"path": [
+								"version2"
+							],
+							"query": [
+								{
+									"key": "contentAuthToken",
+									"value": "thou.shalt.not.steal"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a7386ed0-796c-494a-873f-c453166c8161",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cd3cb489-bbbc-4b0b-b494-230437c27de1",
+				"type": "text/javascript",
+				"exec": [
+					"EXPECTED_RESPONSE_TIME = 1000;",
+					"",
+					"",
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"pm.test(\"Response time is less than \" + EXPECTED_RESPONSE_TIME + \"ms (was actually \"+pm.response.responseTime+\"ms)\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(EXPECTED_RESPONSE_TIME);",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}

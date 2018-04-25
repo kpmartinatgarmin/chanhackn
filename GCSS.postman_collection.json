@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "92ed8da4-c45c-430a-a21b-3f93e8585132",
+		"name": "GCSS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DLMS",
+			"description": "",
+			"item": [
+				{
+					"name": "DLMS over HTTP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3031510a-5c30-4be4-853e-50cb5a0595c0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"'Garmin DLMS!' is present in response body\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Garmin DLMS!\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://dlms.garmin.com",
+							"protocol": "http",
+							"host": [
+								"dlms",
+								"garmin",
+								"com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DLMS over HTTPS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef546ee6-0d7c-4c56-b112-a34ddc14139a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Garmin DLMS!\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://dlms.garmin.com",
+							"protocol": "https",
+							"host": [
+								"dlms",
+								"garmin",
+								"com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8cf7741c-1b35-4f5c-82ee-aa8b46dd2b9e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8ecf7f23-b8c6-4508-8ebe-4e86f86be3c7",
+				"type": "text/javascript",
+				"exec": [
+					"tests[\"Response code is 200\"] = responseCode.code === 200;",
+					"tests[\"Response time is less than 1 second\"] = responseTime < 1000;"
+				]
+			}
+		}
+	]
+}

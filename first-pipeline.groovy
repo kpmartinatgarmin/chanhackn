@@ -1,8 +1,8 @@
 node {
     stage('CAPS') {
         try {
-            sh """newman run CAPS.postman_collection.json \
-  -e DCISVCS_Prod.postman_environment.json \
+            sh """newman run ${env.GIT_URL}CAPS.postman_collection.json \
+  -e ${env.GIT_URL}DCISVCS_Prod.postman_environment.json \
   --reporters junit,cli \
   --reporter-junit-export CAPS.xml"""
             currentBuild.result = 'SUCCESS'
@@ -13,8 +13,8 @@ node {
     }
     stage('GCSS') {
         try {
-            sh """newman run GCSS.postman_collection.json \
-  -e DCISVCS_Prod.postman_environment.json \
+            sh """newman run ${env.GIT_URL}GCSS.postman_collection.json \
+  -e ${env.GIT_URL}DCISVCS_Prod.postman_environment.json \
   --reporters junit,cli \
   --reporter-junit-export GCSS.xml"""
             currentBuild.result = 'SUCCESS'
